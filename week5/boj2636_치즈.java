@@ -20,7 +20,7 @@ public class boj2636_치즈 {
 			for (int c = 0; c < C; c++) {
 				int tmp = Integer.parseInt(st.nextToken());
 				if (tmp == 1)
-					cheese++;
+					cheese++;	//입력받을 때 치즈 수를 기록
 				arr[r][c] = tmp;
 			}
 		}
@@ -32,11 +32,10 @@ public class boj2636_치즈 {
 		while (cheese > 0) {
 			time++;
 			int[][] visited = new int[R][C];
-			int willMelt = 0;
-			visited[0][0] = 1;
+			int willMelt = 0; //녹을 치즈 수(3으로 바꿀 예정)
+			visited[0][0] = 1;//(0,0)은 무조건 공기. 여기서부터 bfs 시작, 바깥 공기부분 visited=1로저장
 			Rs.add(0);
 			Cs.add(0);
-			// 바깥 공기부분 visited=1로저장
 			while (!Rs.isEmpty()) {
 				int tmpR = Rs.poll();
 				int tmpC = Cs.poll();
@@ -50,6 +49,7 @@ public class boj2636_치즈 {
 					}
 				}
 			}
+			// 바깥공기부분은(visited==1, arr==0)이 됨.
 			// 안쪽공기부분(visited==0, arr==0)을 arr=2로 저장
 			for (int r = 0; r < R; r++) {
 				for (int c = 0; c < C; c++) {
@@ -58,7 +58,7 @@ public class boj2636_치즈 {
 					}
 				}
 			}
-			// 치즈 중 바로 옆에 바깥공기(0)인 곳 수 arr=3으로 저장
+			// 치즈 중 바로 옆에 바깥공기(arr==0)인 곳 수 willMelt++, arr=3으로 저장
 			for (int r = 0; r < R; r++) {
 				for (int c = 0; c < C; c++) {
 					if (arr[r][c] == 1) {
